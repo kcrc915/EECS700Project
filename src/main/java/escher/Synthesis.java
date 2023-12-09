@@ -305,7 +305,7 @@ public class Synthesis {
         }
     }
 
-    private static class BufferedOracle {
+    static class BufferedOracle {
         private List<Pair<ArgList, TermValue>> examples;
         private Map<ArgList, TermValue> knownMap;
         private Map<ArgList, TermValue> buffer;

@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b6460823-d836-4d50-9292-68692a17fa0b" name="Changes" comment="Code changes">
-      <change afterPath="$PROJECT_DIR$/src/main/java/escher/TermValue.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/escher/TimeTools.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/escher/Type.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/escher/TypeHierarchy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/escher/TypedEscherSynthesizer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/escher/ValueVectorTree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -68,7 +70,14 @@
       <option name="project" value="LOCAL" />
       <updated>1702148698618</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Code changes">
+      <created>1702149130721</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1702149130721</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

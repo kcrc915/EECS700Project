@@ -14,7 +14,7 @@ public class ValueVectorTree<A> {
     private double thresholdToUseTree;
     private int size;
     private InternalNode<A> root;
-    private Map<ValueVector, A> valueTermMap;
+    private Map<AscendRecSynthesizer.ValueVector, A> valueTermMap;
 
     /**
      * A tree with fixed depth, each path from root to leaf represents a ValueVector,
@@ -35,7 +35,7 @@ public class ValueVectorTree<A> {
         return size;
     }
 
-    public void addTerm(A term, ValueVector valueVector) {
+    public void addTerm(A term, AscendRecSynthesizer.ValueVector valueVector) {
         if (shouldUseTree()) {
             boolean added = root.addTerm(term, valueVector.toList());
             if (added) {

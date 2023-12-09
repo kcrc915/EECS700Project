@@ -531,6 +531,9 @@ public class AscendRecSynthesizer {
             };
             return new ExtendedCompImpl(name, inputTypes, returnType, execute);
         }
+
+        public Object execute(List<Object> emptyList) {
+        }
     }
 
     public static class SynthesizedComponent {
@@ -669,6 +672,9 @@ public class AscendRecSynthesizer {
         public boolean contains(ExtendedValue value) {
             // TODO: Implement contains
             return false;
+        }
+
+        public List<escher.TermValue> toList() {
         }
     }
 

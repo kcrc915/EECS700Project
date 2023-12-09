@@ -4,28 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b6460823-d836-4d50-9292-68692a17fa0b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/escher/AscendRecGoalSearch.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/escher/AscendRecSynthesizer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/escher/BatchGoalSearch.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/escher/CmdInteract.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/escher/DSL.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/escher/DynamicGoalSearch.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/escher/GenExamples.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/escher/ImmutableGoalGraph.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/escher/RunAscendRec.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/escher/RunTypedEscher.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/escher/Synthesis.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/escher/Term.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
+    <list default="true" id="b6460823-d836-4d50-9292-68692a17fa0b" name="Changes" comment="Code changes">
+      <change afterPath="$PROJECT_DIR$/src/main/java/escher/TermValue.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/escher/TimeTools.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,6 +61,14 @@
       <option name="presentableId" value="Default" />
       <updated>1701725400208</updated>
     </task>
+    <task id="LOCAL-00001" summary="Code changes">
+      <created>1702148698618</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1702148698618</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -103,5 +93,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Code changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Code changes" />
   </component>
 </project>

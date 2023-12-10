@@ -1,13 +1,10 @@
 package escher;
 
-import escher.Synthesis.IndexValueMap;
-import escher.Synthesis.ValueVector;
-import escher.Synthesis.splitGoal;
 import java.util.*;
 import java.util.function.BiConsumer;
 
 public class BatchGoalSearch {
-    private interface SearchResult {
+    interface SearchResult {
         void foreach(BiConsumer<Integer, Term> f);
     }
 
@@ -42,19 +39,19 @@ public class BatchGoalSearch {
         return new HashMap<>();
     }
 
-    private static Optional<Pair<Pair<Integer, Term>, List<Integer>>> maxSatConditions(IndexValueMap vm,
-                                                                                       Function<IndexValueMap, Optional<Pair<Integer, Term>>> boolOfVM) {
+    private static Optional<AscendRecSynthesizer.Pair<AscendRecSynthesizer.Pair<Integer, Term>, List<Integer>>> maxSatConditions(IndexValueMap vm,
+                                                                                                                                 Function<IndexValueMap, Optional<Pair<Integer, Term>>> boolOfVM) {
         List<Integer> keyList = vm.keySet().stream()
-                .filter(i -> vm.get(i) == ValueBool.TRUE)
+                .filter(i -> vm.get(i) == valueBool.TRUE)
                 .sorted(Comparator.reverseOrder())
                 .toList();
         IndexValueMap vm1 = vm;
         while (!keyList.isEmpty()) {
-            Optional<Pair<Integer, Term>> result = boolOfVM.apply(vm1);
+            Optional<AscendRecSynthesizer.Pair<Integer, Term>> result = boolOfVM.apply(vm1);
             if (result.isPresent()) {
                 return Optional.of(result.get().mapFirst(x -> x).mapSecond(x -> keyList));
             }
-            vm1 = vm1.updated(keyList.get(0), ValueBool.FALSE);
+            vm1 = vm1.updated(keyList.get(0), valueBool.FALSE);
             keyList = keyList.subList(1, keyList.size());
         }
         return Optional.empty();

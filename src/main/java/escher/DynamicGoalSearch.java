@@ -1,7 +1,5 @@
 package escher;
 
-import escher.Synthesis.*;
-import java.util.Collection;
 import java.util.Set;
 import java.util.Map;
 import java.util.List;
@@ -9,20 +7,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import escher.BatchGoalSearch.*;
-import escher.DynamicGoalSearch.ExecuteHoleException;
-import escher.AscendRecSynthesizer.ExtendedCompImpl;
 
-public class DynamicGoalSearch {
+public class DynamicGoalSearch<ArgListCompare, CostAndVMToTerm, CostToTerms, VMToBool, TermToTerm> {
     private int maxCompCost;
-    private ComponentSignature signature;
     private Set<ComponentImpl> envComps;
     private ArgListCompare argListCompare;
-    private List<ArgList> inputVector;
     private CostAndVMToTerm termOfCostAndVM;
     private CostToTerms termsOfCost;
     private VMToBool boolOfVM;
     private String holeName;
-    private List<Map<String, TermValue>> varMaps;
+    private List<Map<String, termvalue>> varMaps;
     private Map<String, ComponentImpl> envCompMap;
 
     public DynamicGoalSearch(int maxCompCost, ComponentSignature signature, Set<ComponentImpl> envComps,
@@ -39,40 +33,33 @@ public class DynamicGoalSearch {
         this.holeName = "HOLE";
         this.varMaps = new ArrayList<>();
         for (int i = 0; i < inputVector.size(); i++) {
-            Map<String, TermValue> varMap = new HashMap<>();
-            for (int j = 0; j < signature.argNames.length; j++) {
-                varMap.put(signature.argNames[j], inputVector.get(i).get(j));
-            }
+            Map<String, termvalue> varMap = new HashMap<>();
+
             this.varMaps.add(varMap);
         }
         this.envCompMap = new HashMap<>();
         for (ComponentImpl comp : envComps) {
             this.envCompMap.put(comp.name, comp);
         }
-        ComponentImpl holeImpl = new ComponentImpl(holeName, new ArrayList<>(), signature.returnType, (args) -> {
-            throw new ExecuteHoleException();
-        });
-        this.envCompMap.put(holeName, holeImpl);
+
+
     }
 
     public ComponentImpl assembleRecProgram(Term term) {
         return ComponentImpl.recursiveImpl(signature, envCompMap, argListCompare, term);
     }
 
-    public SearchResult searchMin(int cost, IndexValueMap currentGoal, List<List<Pair<Term, ExtendedValueVec>>> recTermsOfReturnType,
+    public SearchResult searchMin(int cost, IndexValueMap currentGoal, List<List<AscendRecSynthesizer.Pair<Term, ExtendedValueVec>>> recTermsOfReturnType,
                                   TermToTerm fillTermToHole, boolean isFirstBranch, Option<List<String>> prefixTrigger) {
         if (cost <= 0) {
             return null;
         }
         Set<Integer> keySet = currentGoal.keySet();
         for (int c = 1; c <= maxCompCost; c++) {
-            Option<Term> termOption = termOfCostAndVM.apply(c, currentGoal);
-            if (termOption.isDefined()) {
-                return new FoundAtCost(c, termOption.get());
-            }
+
             if (!isFirstBranch) {
-                for (List<Pair<Term, ExtendedValueVec>> recTerms : recTermsOfReturnType.get(c - 1)) {
-                    for (Pair<Term, ExtendedValueVec> pair : recTerms) {
+                for (AscendRecSynthesizer.Pair<Term, Synthesis.ExtendedValueVec> recTerms : recTermsOfReturnType.get(c - 1)) {
+                    for (AscendRecSynthesizer.Pair<Term, ExtendedValueVec> pair : recTerms) {
                         Term term = pair.first();
                         ExtendedValueVec vv = pair.second();
                         ExtendedValueVec.MatchResult matchResult = vv.matchWithIndexValueMap(currentGoal);
@@ -152,15 +139,15 @@ public class DynamicGoalSearch {
                             List<Value> newVV = new ArrayList<>();
                             for (int i = 0; i < vv.size(); i++) {
                                 Value value = vv.get(i);
-                                if (value instanceof ValueUnknown) {
-                                    Map<String, TermValue> varMap = varMaps.get(i);
+                                if (value instanceof valueunknown) {
+                                    Map<String, termvalue> varMap = varMaps.get(i);
                                     try {
                                         newVV.add(Term.executeTerm(varMap, envWithPartialImpl, term));
                                     } catch (ExecuteHoleException e) {
-                                        newVV.add(ValueUnknown.getInstance());
+                                        newVV.add(valueunknown.getInstance());
                                     }
                                 } else {
-                                    newVV.add((TermValue) value);
+                                    newVV.add((termvalue) value);
                                 }
                             }
                             newRecTerms.add(new Pair<>(term, new ExtendedValueVec(newVV)));

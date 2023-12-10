@@ -5,12 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b6460823-d836-4d50-9292-68692a17fa0b" name="Changes" comment="Code changes">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/escher/SynthesisTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/ImplTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/child/getClass.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/escher/Either.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/escher/AscendRecGoalSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/escher/AscendRecGoalSearch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/escher/Synthesis.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/escher/Synthesis.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/escher/AscendRecGoalSearch.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/escher/AscendRecSynthesizer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/escher/BatchGoalSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/escher/BatchGoalSearch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/escher/DSL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/escher/DSL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/escher/DynamicGoalSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/escher/DynamicGoalSearch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/escher/GenExamples.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/escher/GenExamples.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/escher/ImmutableGoalGraph.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/escher/RunAscendRec.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/escher/RunTypedEscher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/escher/RunTypedEscher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/escher/Synthesis.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/escher/SynthesisTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/escher/Term.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/escher/Term.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/escher/TermValue.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/escher/Type.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/escher/TypeHierarchy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/escher/TypeHierarchy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/escher/TypedEscherSynthesizer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/escher/ValueVectorTree.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,14 +62,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_directory_selection": "C:/Users/krish/Documents/EECS700Project/src/main/java/escher"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;last_directory_selection&quot;: &quot;C:/Users/krish/Documents/EECS700Project/src/main/java/escher&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="child" />
+      <recent name="escher" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -93,7 +113,21 @@
       <option name="project" value="LOCAL" />
       <updated>1702150882446</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Code changes">
+      <created>1702151550531</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1702151550531</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Code changes">
+      <created>1702151628398</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1702151628398</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

@@ -1,16 +1,16 @@
 package escher;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-/**
- * term := <br>
- * | Var(name) <br>
- * | Component(name, term, ..., term) <br>
- * | if term then term else term <br>
- * please note this `term` is called `program` in the thesis.
- */
+
 public interface Term {
+    static boolean termsLt(List<Term> terms, List<Term> terms1) {
+        return false;
+    }
+
     String show();
 
     int kind();
@@ -19,11 +19,11 @@ public interface Term {
 
     boolean greaterThan(Term that);
 
-    TermValue executeTerm(Map<String, TermValue> varMap, Map<String, ComponentImpl> compMap);
+    termvalue executeTerm(Map<String, termvalue> varMap, Map<String, ComponentImpl> compMap) throws Exception;
 
-    TermValue executeTermDebug(Map<String, TermValue> varMap, Map<String, ComponentImpl> compMap, int depth);
+    termvalue executeTermDebug(Map<String, termvalue> varMap, Map<String, ComponentImpl> compMap, int depth) throws Exception;
 
-    ExtendedValue executeTermInExtendedEnv(Map<String, ExtendedValue> varMap, Map<String, ExtendedCompImpl> compMap);
+    ExtendedValue executeTermInExtendedEnv(Map<String, ExtendedValue> varMap, Map<String, ExtendedCompImpl> compMap) throws Exception;
 
     void printTerm(int depth);
 }
@@ -68,16 +68,14 @@ class Var implements Term {
     }
 
     @Override
-    public TermValue executeTerm(Map<String, TermValue> varMap, Map<String, ComponentImpl> compMap) {
+    public termvalue executeTerm(Map<String, termvalue> varMap, Map<String, ComponentImpl> compMap) {
         return varMap.get(name);
     }
 
     @Override
-    public TermValue executeTermDebug(Map<String, TermValue> varMap, Map<String, ComponentImpl> compMap, int depth) {
+    public termvalue executeTermDebug(Map<String, termvalue> varMap, Map<String, ComponentImpl> compMap, int depth) {
         System.out.println("  ".repeat(depth) + ">> " + show());
-        TermValue v = varMap.getOrDefault(name, throw new ExecutionError("variable '" + name + "' not in scope!"));
-        System.out.println("  ".repeat(depth) + "--> " + v.show());
-        return v;
+        termvalue v ;throw new ExecutionError("variable '" + name + "' not in scope!");
     }
 
     @Override
@@ -154,33 +152,45 @@ class Component implements Term {
     }
 
     @Override
-    public TermValue executeTerm(Map<String, TermValue> varMap, Map<String, ComponentImpl> compMap) {
-        List<TermValue> args = terms.stream()
-                .map(t -> t.executeTerm(varMap, compMap))
+    public termvalue executeTerm(Map<String, termvalue> varMap, Map<String, ComponentImpl> compMap) {
+        List<termvalue> args = terms.stream()
+                .map(t -> {
+                    try {
+                        return t.executeTerm(varMap, compMap);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
                 .collect(Collectors.toList());
         return compMap.get(name).executeEfficient(args);
     }
 
     @Override
-    public TermValue executeTermDebug(Map<String, TermValue> varMap, Map<String, ComponentImpl> compMap, int depth) {
+    public termvalue executeTermDebug(Map<String, termvalue> varMap, Map<String, ComponentImpl> compMap, int depth) {
         System.out.println("  ".repeat(depth) + ">> " + show());
-        List<TermValue> args = terms.stream()
-                .map(t -> t.executeTermDebug(varMap, compMap, depth + 1))
+        List<termvalue> args = terms.stream()
+                .map(t -> {
+                    try {
+                        return t.executeTermDebug(varMap, compMap, depth + 1);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
                 .collect(Collectors.toList());
-        TermValue v = compMap.getOrDefault(name, throw new ExecutionError("component '" + name + "' not in scope!"))
-                .execute(args, true);
-        System.out.println("  ".repeat(depth) + "--> " + v.show());
-        return v;
+
+
+        return null;
     }
 
     @Override
-    public ExtendedValue executeTermInExtendedEnv(Map<String, ExtendedValue> varMap, Map<String, ExtendedCompImpl> compMap) {
-        List<TermValue> args = terms.stream()
-                .map(t -> t.executeTermInExtendedEnv(varMap, compMap))
-                .filter(v -> v != ValueUnknown.INSTANCE)
-                .collect(Collectors.toList());
-        return compMap.get(name).execute(args);
+    public ExtendedValue executeTermInExtendedEnv(Map<String, ExtendedValue> varMap, Map<String, ExtendedCompImpl> compMap) throws Exception {
+        return null;
     }
+
+    private void execute(List<termvalue> args, boolean b) {
+    }
+
+
 
     @Override
     public void printTerm(int depth) {
@@ -240,31 +250,30 @@ class If implements Term {
     }
 
     @Override
-    public TermValue executeTerm(Map<String, TermValue> varMap, Map<String, ComponentImpl> compMap) {
-        TermValue cv = condition.executeTerm(varMap, compMap);
-        if (cv == ValueError.INSTANCE) {
-            return ValueError.INSTANCE;
-        } else if (cv == ValueBool.TRUE) {
+    public termvalue executeTerm(Map<String, termvalue> varMap, Map<String, ComponentImpl> compMap) throws Exception {
+        termvalue cv = condition.executeTerm(varMap, compMap);
+        if (cv == valueerror.INSTANCE) {
+            return valueerror.INSTANCE;
+        } else if (cv == valueBool.TRUE) {
             return thenBranch.executeTerm(varMap, compMap);
-        } else if (cv == ValueBool.FALSE) {
+        } else if (cv == valueBool.FALSE) {
             return elseBranch.executeTerm(varMap, compMap);
         }
         throw new Exception("Branch condition evaluated to false type");
     }
 
     @Override
-    public TermValue executeTermDebug(Map<String, TermValue> varMap, Map<String, ComponentImpl> compMap, int depth) {
+    public termvalue executeTermDebug(Map<String, termvalue> varMap, Map<String, ComponentImpl> compMap, int depth) throws Exception {
         System.out.println("  ".repeat(depth) + ">> " + show());
-        TermValue cv = condition.executeTermDebug(varMap, compMap, depth + 1);
-        TermValue v;
-        if (cv == ValueUnknown.INSTANCE) {
-            v = ValueUnknown.INSTANCE;
-        } else if (cv == ValueError.INSTANCE) {
-            v = ValueError.INSTANCE;
-        } else if (cv == ValueBool.TRUE) {
-            v = thenBranch.executeTermDebug(varMap, compMap, depth + 1);
-        } else if (cv == ValueBool.FALSE) {
-            v = elseBranch.executeTermDebug(varMap, compMap, depth + 1);
+        termvalue cv = condition.executeTermDebug(varMap, compMap, depth + 1);
+        valueerror v;
+
+        if (cv == valueerror.INSTANCE) {
+            v = valueerror.INSTANCE;
+        } else if (cv == valueBool.TRUE) {
+            v = (valueerror) thenBranch.executeTermDebug(varMap, compMap, depth + 1);
+        } else if (cv == valueBool.FALSE) {
+            v = (valueerror) elseBranch.executeTermDebug(varMap, compMap, depth + 1);
         } else {
             throw new Exception("Branch condition evaluated to false type");
         }
@@ -273,15 +282,15 @@ class If implements Term {
     }
 
     @Override
-    public ExtendedValue executeTermInExtendedEnv(Map<String, ExtendedValue> varMap, Map<String, ExtendedCompImpl> compMap) {
+    public ExtendedValue executeTermInExtendedEnv(Map<String, ExtendedValue> varMap, Map<String, ExtendedCompImpl> compMap) throws Exception {
         ExtendedValue cv = condition.executeTermInExtendedEnv(varMap, compMap);
-        if (cv == ValueUnknown.INSTANCE) {
-            return ValueUnknown.INSTANCE;
-        } else if (cv == ValueError.INSTANCE) {
-            return ValueError.INSTANCE;
-        } else if (cv == ValueBool.TRUE) {
+        if (cv == valueunknown.INSTANCE) {
+            return valueunknown.INSTANCE;
+        } else if (cv == valueerror.INSTANCE) {
+            return (ExtendedValue) valueerror.INSTANCE;
+        } else if (cv == valueBool.TRUE) {
             return thenBranch.executeTermInExtendedEnv(varMap, compMap);
-        } else if (cv == ValueBool.FALSE) {
+        } else if (cv == valueBool.FALSE) {
             return elseBranch.executeTermInExtendedEnv(varMap, compMap);
         } else {
             throw new Exception("Branch condition evaluated to false type");
@@ -297,11 +306,28 @@ class If implements Term {
     }
 }
 
-class TermValue {
+class termvalue {
+    public String show() {
+        String valueError = null;
+        return valueError;
+    }
     // implementation of TermValue class
 }
 
 class ComponentImpl {
+    public String name;
+
+    public <E> ComponentImpl(String holeName, ArrayList<E> es, Type returnType, Object o) {
+    }
+
+    public static <ArgListCompare> ComponentImpl recursiveImpl(Synthesis.ComponentSignature signature, Map<String, ComponentImpl> envCompMap, ArgListCompare argListCompare, Term term) {
+        return null;
+    }
+
+    public termvalue executeEfficient(List<termvalue> args) {
+        termvalue extendedValue = new termvalue();
+        return extendedValue;
+    }
     // implementation of ComponentImpl class
 }
 
@@ -311,18 +337,19 @@ class ExecutionError extends RuntimeException {
     }
 }
 
-class ExtendedValue {
-    // implementation of ExtendedValue class
-}
+
 
 class ExtendedCompImpl {
+    public ExtendedValue execute(List<termvalue> args) {
+        return null;
+    }
     // implementation of ExtendedCompImpl class
 }
 
-class ValueError extends TermValue {
-    public static final ValueError INSTANCE = new ValueError();
+class valueerror extends termvalue {
+    public static final valueerror INSTANCE = new valueerror();
 
-    private ValueError() {
+    private valueerror() {
     }
 
     @Override
@@ -331,13 +358,13 @@ class ValueError extends TermValue {
     }
 }
 
-class ValueBool extends TermValue {
-    public static final ValueBool TRUE = new ValueBool(true);
-    public static final ValueBool FALSE = new ValueBool(false);
+class valueBool extends termvalue {
+    public static final valueBool TRUE = new valueBool(true);
+    public static final valueBool FALSE = new valueBool(false);
 
     private final boolean value;
 
-    private ValueBool(boolean value) {
+    valueBool(boolean value) {
         this.value = value;
     }
 
@@ -351,10 +378,10 @@ class ValueBool extends TermValue {
     }
 }
 
-class ValueUnknown extends ExtendedValue {
-    public static final ValueUnknown INSTANCE = new ValueUnknown();
+class valueunknown implements ExtendedValue {
+    public static final valueunknown INSTANCE = new valueunknown();
 
-    private ValueUnknown() {
+    private valueunknown() {
     }
 
     @Override

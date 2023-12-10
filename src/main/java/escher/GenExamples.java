@@ -1,14 +1,5 @@
-package escher
+package escher;
 
-import escher.DSL.{tyList, tyVar}
-import escher.Synthesis.ArgList
-
-import scala.collection.mutable
-import DSL._
-
-/**
- * Created by weijiayi on 14/05/2017.
- */
 object GenExamples {
         def compress[A](buffer: mutable.Map[List[A], List[A]]): List[A] => List[A] = {
         def f(xs: List[A]): List[A] = {
@@ -36,6 +27,6 @@ object GenExamples {
         List(2, 3, 3, 9, 9)
         )
         inputs.foreach(in => impl(in))
-        buffer.toList.map(_._1.toString).sorted.foreach(println)
+        buffer.toList.map(._1.toString).sorted.foreach(println)
         }
         }
